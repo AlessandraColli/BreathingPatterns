@@ -2,7 +2,6 @@
 ### following the algorithm described in the paper ###
 
 library(splus2R)
-source("smooth_breath_gcv.R")
 
 find_local_min=function(time, voltot, peak_span=201, grid_coef=10, step=10, plot=0, spiky_min=F){
   

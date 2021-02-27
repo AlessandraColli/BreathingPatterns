@@ -5,11 +5,14 @@
 library(fda)
 library(fdakmapp)
 
-source("smooth_breath_gcv.R")
-source("localmin.R")
-source("table_breaths.R")
-source("outlier_detection.R")
-source("plots.R")
+source("../src/smooth_breath_gcv.R")
+source("../src/localmin.R")
+source("../src/table_breaths.R")
+source("../src/rescale.R")
+source("../src/outlier_detection.R")
+source("../src/plots.R")
+
+### load data ###
 
 name=''
 
@@ -20,6 +23,8 @@ volrcp=data[,2]
 volrca=data[,3]
 volab=data[,4]
 voltot=data[,5]
+
+### plot data for visual inspection ###
 
 x11()
 plot(time, voltot, col='black', type = 'l', main='CW volume', xlab='time (s)', ylab='volume (L)')
@@ -33,13 +38,14 @@ plot(time, volrca, col='black', type = 'l', main='RCa volume', xlab='time (s)', 
 x11()
 plot(time, volab, col='black', type = 'l', main='AB volume', xlab='time (s)', ylab='volume (L)')
 
-write_centers=F
-
-min=find_local_min(time, voltot, peak_span=31, grid_coef=10, step=10, plot=1,spiky_min = T)
+### find local minima ###
+# (these minima params are generally good, might need to be tuned to the specific case)
+min=find_local_min(time, vol, peak_span=201, grid_coef=10, step=10, plot=1,spiky_min = F)
 
 x11(); plot(time, voltot, type='l', main='Local minima', xlab='time (s)', ylab='volume (L)')
 points(time[min$minidx], voltot[min$minidx], col='red',pch=19, cex=1.5)
 
+### smooth curves ###
 volumes.tot=table_breaths(time,voltot,min$minidx)
 volumes.rcp=table_breaths(time,volrcp, min$minidx)
 volumes.rca=table_breaths(time,volrca, min$minidx)
@@ -161,6 +167,10 @@ find.median=F # FALSE to find clusters, TRUE to find just the median
 K = 5 # max number of clusters to try. Selection of the final k will be done
 # looking at the elbow in the plot of (k, similarity_within_cluster(k))
 
+# NOTE
+# the kmap function sets random start cluster centroids every time it's called
+# hence it might produce different results if called multiple times
+
 if(find.median){
   
   nclust=1
@@ -170,23 +180,13 @@ if(find.median){
   
   kmap_show_results(res)
   
+  # centroid label
   ind=which(res$similarity.final==0) 
-  
-  centroid1=cbind(filtered.times[,ind],filtered.Vtot[,ind], filtered.Vrcp[,ind], 
-                  filtered.Vrca[, ind], filtered.Vab[,ind])
-  
-  dcentroid1=cbind(filtered.times[,ind],filtered.Vtot1[,ind], filtered.Vrcp1[,ind], 
-                             filtered.Vrca1[, ind], filtered.Vab1[,ind])
-  
-  if(write_centers)
-  {
-    write.table(centroid1, file=paste0(name,'_median.txt'))
-    write.table(dcentroid1, file=paste0(name,'_median_d1.txt')) 
-  }
+
   
   }else{
   
-  # choose number of clusters --> elbow
+  # find the best number of clusters --> elbow of the (k, similarity) plot
 
   checksim=numeric(K)
     
@@ -225,7 +225,7 @@ x11();matplot(filtered.times, filtered.Vrcp,col=col$col.groups, type='l',main='C
 x11();matplot(filtered.times, filtered.Vrca,col=col$col.groups, type='l', main='Clustered breaths - RCa', xlab='time (s)', ylab='volume (L)')
 x11();matplot(filtered.times, filtered.Vab,col=col$col.groups, type='l', main='Clustered breaths - AB', xlab='time (s)', ylab='volume (L)')
 
-  
+# find centroid labels  
 if(groupBy.abs){
   ind=which(res$similarity.final==0)
 }else{
