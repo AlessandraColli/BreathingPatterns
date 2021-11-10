@@ -159,7 +159,8 @@ outlier_detection=function(times,smoothed_tot,smoothed_rcp,smoothed_rca,smoothed
     outliers.idx=c(time.outliers.idx, magnitude.outliers.idx,shape.outliers.idx),
     time.outliers.idx=time.outliers.idx,
     magnitude.outliers.idx=magnitude.outliers.idx,
-    shape.outliers.idx=shape.outliers.idx)
+    shape.outliers.idx=shape.outliers.idx,
+    weights=weights, range=range, no_iter=no_iter)
   
 }
 
@@ -295,6 +296,7 @@ find_outliers=function(times,smoothed_tot,plot_option=1, weights='uniform', rang
     outliers.idx=c(time.outliers.idx, magnitude.outliers.idx,shape.outliers.idx),
     time.outliers.idx=time.outliers.idx,
     magnitude.outliers.idx=magnitude.outliers.idx,
-    shape.outliers.idx=shape.outliers.idx)
+    shape.outliers.idx=shape.outliers.idx,
+    weights=weights, range=range, no_iter=no_iter)
   
 }

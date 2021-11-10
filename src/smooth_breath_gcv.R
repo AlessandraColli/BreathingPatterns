@@ -41,6 +41,7 @@ smooth_breath= function(time, amplitude, order=5, grid_coef=10,lambda=c(1e-4,1e-
     points(abscissa,Xss0 ,type="l",col="blue",lwd=2)
   }
   
-  result=list( smoothed_curve=Xss0, der1= Xss1, der2= Xss2, GCV=GCV, df=df);
+  result=list( smoothed_curve=Xss0, der1= Xss1, der2= Xss2, GCV=GCV, df=df,
+               order=order, grid_coef=grid_coef);
   result
 }
