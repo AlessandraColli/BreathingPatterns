@@ -40,7 +40,7 @@ plot(time, volab, col='black', type = 'l', main='AB volume', xlab='time (s)', yl
 
 ### find local minima ###
 # (these minima params are generally good, might need to be tuned to the specific case)
-min=find_local_min(time, vol, peak_span=201, grid_coef=10, step=10, plot=1,spiky_min = F)
+min=find_local_min(time, voltot, peak_span=201, grid_coef=10, step=10, plot=1,spiky_min = F)
 
 x11(); plot(time, voltot, type='l', main='Local minima', xlab='time (s)', ylab='volume (L)')
 points(time[min$minidx], voltot[min$minidx], col='red',pch=19, cex=1.5)
