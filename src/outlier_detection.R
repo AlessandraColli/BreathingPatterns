@@ -29,7 +29,7 @@ outlier_detection=function(times,smoothed_tot,smoothed_rcp,smoothed_rca,smoothed
     deltas=c(deltas, filtered.times[length(which(!is.na(filtered.times[,i]))),i])
   
   while(found){             # iterate detection until no outliers are found
-    x11()
+    if( plot_option == T){x11()}
     bp <- boxplot(deltas, range=range, plot = plot_option)
     timesout <- bp$out
     timesout <- unique(timesout)
@@ -109,7 +109,7 @@ outlier_detection=function(times,smoothed_tot,smoothed_rcp,smoothed_rca,smoothed
   found=1
   
   while(found){   # iterate detection until no outliers are found
-    x11()
+    if(plot_option==TRUE){x11()}
     out2=multivariate_outliergram(mfData(grid=1:100,list(t(scaled.Vtot),t(scaled.Vrcp), t(scaled.Vrca),t(scaled.Vab))),weights=weights, display = plot_option) #outlier detection-shape
     idx2=out2$ID_outliers;
     if(length(as.vector(idx2))>0){
@@ -190,7 +190,7 @@ find_outliers=function(times,smoothed_tot,plot_option=1, weights='uniform', rang
     deltas=c(deltas, filtered.times[length(which(!is.na(filtered.times[,i]))),i])
   
   while(found){             # iterate detection until no outliers are found
-    x11()
+    if( plot_option == T){x11()}
     bp <- boxplot(deltas, range=range, plot = plot_option)
     timesout <- bp$out
     timesout <- unique(timesout)
@@ -232,7 +232,7 @@ find_outliers=function(times,smoothed_tot,plot_option=1, weights='uniform', rang
   
   while(found){             # iterate detection until no outliers are found
     
-    #  x11()
+    if( plot_option == T){x11()}
     out1=fbplot(fData(grid=1:100, t(scaled.Vtot)), main=list('Magnitude outliers'),display=plot_option)
     idx1=out1$ID_outliers;
     
@@ -258,7 +258,7 @@ find_outliers=function(times,smoothed_tot,plot_option=1, weights='uniform', rang
   found=1
   
   while(found){   # iterate detection until no outliers are found
-    x11()
+    if( plot_option == T){x11()}
     out2=outliergram(fData(grid=1:100,t(scaled.Vtot)), display = plot_option) #outlier detection-shape
     idx2=out2$ID_outliers;
     if(length(as.vector(idx2))>0){
