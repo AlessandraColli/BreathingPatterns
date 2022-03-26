@@ -1,6 +1,24 @@
-### functional outlier detection ###
-
 library(roahd)
+
+#' This function performs functional outlier detection on a set of Optoelectronic Plethysmography
+#' curves containing total volume, pulmonary rib cage voltume, abdominal rib cage volume and abdominal volume
+#' as in the paper *A. LoMauro, A. Colli, L. Colombo, A. Aliverti,
+#' Breathing patterns recognition: A functional data analysis approach,
+#' Computer Methods and Programs in Biomedicine*
+#'
+#' @param times matrix of time vectors for each breath curve
+#' @param smoothed_tot matrix of (smoothed) total volumes
+#' @param smoothed_tot matrix of (smoothed) pulmonary rib cage volumes
+#' @param smoothed_rcp matrix of (smoothed) abdominal rib cage volumes
+#' @param smoothed_rcp matrix of (smoothed) abdominal volumes
+#' @param plot_option defaults 0, if 1 plots all outlier detection results
+#' @param weights a vector of weighting of each compartment to be used in multivariate
+#' depth measures. if "uniform", 0.25 weights are used for each compartment
+#' @param range time boxplot range (defaults to 1.5, that is the classical 1.5 IQR to mark outliers)
+#' @param no_iter defaults 0, if 1 outlier detection iterations are not performed. To be used e.g. when breaths are few
+#' 
+#' @return a list with a matrix of filtered time curves and compartment curves,
+#' as well as outliers indexes
 
 ### multivariate signal (Vtot, RCp, RCa, AB) ###
 outlier_detection=function(times,smoothed_tot,smoothed_rcp,smoothed_rca,smoothed_ab,plot_option=1, weights='uniform', range=1.5, no_iter=0){
@@ -163,6 +181,23 @@ outlier_detection=function(times,smoothed_tot,smoothed_rcp,smoothed_rca,smoothed
     weights=weights, range=range, no_iter=no_iter)
   
 }
+
+#' This function performs functional outlier detection on a set of breathing
+#' curves containing only the total volume
+#' as in the paper *A. LoMauro, A. Colli, L. Colombo, A. Aliverti,
+#' Breathing patterns recognition: A functional data analysis approach,
+#' Computer Methods and Programs in Biomedicine*
+#'
+#' @param times matrix of time vectors for each breath curve
+#' @param smoothed_tot matrix of (smoothed) total volumes
+#' @param plot_option defaults 0, if 1 plots all outlier detection results
+#' @param weights a vector of weighting of each compartment to be used in multivariate
+#' depth measures. if "uniform", 0.25 weights are used for each compartment
+#' @param range time boxplot range (defaults to 1.5, that is the classical 1.5 IQR to mark outliers)
+#' @param no_iter defaults 0, if 1 outlier detection iterations are not performed. To be used e.g. when breaths are few
+#' 
+#' @return a list with a matrix of filtered time curves and volume curves,
+#' as well as outliers indexes
 
 ### univariate signal (Vtot only) ###
 find_outliers=function(times,smoothed_tot,plot_option=1, weights='uniform', range=1.5, no_iter=0){

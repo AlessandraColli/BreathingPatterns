@@ -1,6 +1,11 @@
-# function that takes a time series as input and returns the value of the ts in n equidistanced
-# points over t_min and t_max, using a cubic spline for interpolation
-
+#' Rescales a time, value vector of generic length into a vector of input length
+#' 
+#' @param x time vector
+#' @param y value vector
+#' @param n output length
+#' 
+#' @return a new y of length n
+#' 
 rescale_time=function(x,y,n=1000){      
   
   # step=length(x)/n
@@ -13,6 +18,12 @@ rescale_time=function(x,y,n=1000){
   res_curve$y
 }
 
+#' Function that takes a time series as input and returns the value of the ts in n equidistanced
+#' points over t_min and t_max, using a cubic spline for interpolation
+#' 
+#' @param breaths matrix of breath volumes
+#' @param times matrix of breath time vectors
+#' 
 rescale_all=function(breaths,times){
 
   first_br=breaths
@@ -32,4 +43,3 @@ rescale_all=function(breaths,times){
   result
   
 }
-

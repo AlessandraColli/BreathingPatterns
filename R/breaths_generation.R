@@ -1,15 +1,52 @@
-rescale_time=function(x,y,n=1000){      
+#' A function to generate a sequence simulated breath curves.
+#' 
+#' @param nbraths number of breaths in the simulated track
+#' @param n_parts number of sections composing each breath
+#' @param sampling_freq desired sampling frequency of the output curves
+#' @param amplitudes mean amplitude of each breath part
+#' @param mean period of each breath part
+#' @param sd_amp standard deviation to apply on each amplitude
+#' @param sd_per standard deviation to apply on each period
+#' 
+#' @return a list with a volume vector representing the simulated curve
+#' 
+breaths_seq_gen=function(nbreaths=1, n_parts=1, sampling_freq=60, amplitudes=2, periods=3, sd_amp=0.05, sd_per=0.1){
   
-  # step=length(x)/n
-  f=x[1];
-  t=x[length(x)];
+  y=c()
+  lengths=c()
+  amp=c()
   
-  newx=seq(f,t,length.out=n);
+  br=breath_gen(n_parts=n_parts,sampling_freq=sampling_freq, amplitudes=amplitudes, 
+                periods=periods, sd_amp=sd_amp, sd_per=sd_per)
+  y=c(y, br$y)
+  lengths=c(lengths, br$lengths)
+  amp=c(amp, br$amp)
   
-  res_curve=spline(x,y,xout=newx);
-  res_curve$y
+  if(nbreaths>1){
+    
+    for(i in 1:(nbreaths-1)){
+      br=breath_gen(n_parts=n_parts,sampling_freq=sampling_freq, amplitudes=amplitudes, 
+                    periods=periods, sd_amp=sd_amp, sd_per=sd_per)
+      y=c(y, br$y-br$y[1]+y[length(y)])
+      lengths=c(lengths, br$lengths)
+      amp=c(amp, br$amp)
+    }
+  }
+  
+  res=list(y=y, lengths=lengths, amp=amp)
 }
 
+#' A function to generate simulated breath curves.
+#' 
+#' @param n_parts number of sections composing the breath
+#' @param sampling_freq desired sampling frequency of the output curve
+#' @param amplitudes mean amplitude of each part
+#' @param mean period of each part
+#' @param sd_amp standard deviation to apply on each amplitude
+#' @param sd_per standard deviation to apply on each period
+#' 
+#' @return a list with a volume vector representing the simulated curve
+#' 
 breath_gen=function(n_parts=1, sampling_freq=60, amplitudes=2, periods=3, sd_amp=0.05, sd_per=0.1){
   
   la=length(amplitudes)
@@ -99,28 +136,23 @@ breath_gen=function(n_parts=1, sampling_freq=60, amplitudes=2, periods=3, sd_amp
   
 }
 
-breaths_seq_gen=function(nbreaths=1, n_parts=1, sampling_freq=60, amplitudes=2, periods=3, sd_amp=0.05, sd_per=0.1){
+#' Rescales a time, value vector of generic length into a vector of input length
+#' 
+#' @param x time vector
+#' @param y value vector
+#' @param n output length
+#' 
+#' @return a new y of length n
+#' 
+rescale_time=function(x,y,n=1000){      
   
-  y=c()
-  lengths=c()
-  amp=c()
+  # step=length(x)/n
+  f=x[1];
+  t=x[length(x)];
   
-  br=breath_gen(n_parts=n_parts,sampling_freq=sampling_freq, amplitudes=amplitudes, 
-                 periods=periods, sd_amp=sd_amp, sd_per=sd_per)
-  y=c(y, br$y)
-  lengths=c(lengths, br$lengths)
-  amp=c(amp, br$amp)
-
-  if(nbreaths>1){
-    
-    for(i in 1:(nbreaths-1)){
-      br=breath_gen(n_parts=n_parts,sampling_freq=sampling_freq, amplitudes=amplitudes, 
-                     periods=periods, sd_amp=sd_amp, sd_per=sd_per)
-      y=c(y, br$y-br$y[1]+y[length(y)])
-      lengths=c(lengths, br$lengths)
-      amp=c(amp, br$amp)
-    }
-  }
+  newx=seq(f,t,length.out=n);
   
-  res=list(y=y, lengths=lengths, amp=amp)
+  res_curve=spline(x,y,xout=newx);
+  res_curve$y
 }
+

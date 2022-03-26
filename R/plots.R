@@ -1,5 +1,13 @@
-### Some plotting functions
-
+#' This function plots outlier curves over the total volume curve, in different colors 
+#' according to the kind of outlier (time, magnitude, shape)
+#' 
+#' @param time time vector
+#' @param vol volume vector
+#' @param volumes matrix of single breaths volumes
+#' @param time.outliers.idx indexes of time outliers wrt the breaths matrix
+#' @param magnitude.outliers.idx indexes of magnitude outliers wrt the breaths matrix
+#' @param shape.outliers.idx indexes of shape outliers wrt the breaths matrix
+#' 
 plot_outliers=function(time, vol, volumes,
                        time.outliers.idx, magnitude.outliers.idx, shape.outliers.idx,
                        main='Outlier breaths',xlab='time (s)', ylab='volume (L)', legend_pos='topright')
@@ -25,6 +33,19 @@ plot_outliers=function(time, vol, volumes,
   
 }  
 
+#' This function plots breath curves against the breathing track, in different color according
+#' to the cluster they belong.
+#' 
+#' @param time time vector
+#' @param amplitude volume vector
+#' @param plot.times matrix of time vectors of the breaths to plot
+#' @param plot.breaths matrix of volume vectors of the breaths to plot
+#' @param labels labels of each breath
+#' @param threshold clusters having a number of breaths smaller than threshold will be plotted as
+#' belonging to a "Discarded" group.
+#' 
+#' @return a list with colors assigned to each breath and the corresponding cluster
+#' 
 plot.breaths.byclusters=function(time,amplitude,plot.times,plot.breaths, labels, legend_pos='topleft',threshold=0){
   
   n.breaths=dim(plot.times)[2]
@@ -65,8 +86,6 @@ plot.breaths.byclusters=function(time,amplitude,plot.times,plot.breaths, labels,
   lty <- rep(1, length(text))
   lwd <- rep(2,length(text));
   legend(legend_pos, legend = text, col = col.ramp, lty = lty, lwd=lwd, cex = 0.8, bty='n')
-  
-  
   
   ### Plot selected clusters only
   

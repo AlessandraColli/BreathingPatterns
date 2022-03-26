@@ -1,3 +1,19 @@
+#' Function for piecewise smoothing of breath curves using B-splines. The optimal smoothing
+#' parameter lambda is chosen by minimising Generalised Cross Validation (GCV) error.
+#' 
+#' @param time time abscissa vector
+#' @param amplitude the volume vector
+#' @param order order of B-Splines to use for smoothing. Defaults to 5.
+#' @param grid_coef length of pieces in piecewise smoothing. Defaults to 10.
+#' @param lambda vector of smoothing parameters to try. The default goes from 1e-4 to 1e-10. 
+#' This vector should have a logarithmic scale.
+#' @param plot defaults 0, if 1 GCV minimisation results are plotted
+#' 
+#' @return a list with smoothed curves, the estimated first and second derivative, the
+#' estimated GCV and degrees of freedom.
+#' 
+#' @references J.Ramsay , B. Silverman , Functional Data Analysis, Springer Series in Statistics, 2005 .
+#' 
 smooth_breath= function(time, amplitude, order=5, grid_coef=10,lambda=c(1e-4,1e-5,1e-6,1e-7,1e-8,1e-9,1e-10),plot=0){
   
   breakst=c()

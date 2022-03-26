@@ -1,6 +1,11 @@
-### This function creates a table of separated breath curves ###
-### and times given the signal and local minima indices      ###
-
+#' This function creates a table of separated breath curves and times given the signal and local minima indices
+#'
+#' @param time time vector
+#' @param aplitude volume vector
+#' @param min_idx a vector of minima indices wrt time and volume vectors
+#' 
+#' @return a list with the matrices of breaths times and breaths volumes
+#' 
 table_breaths=function(time,amplitude, min_idx){
   
   breaths=amplitude[min_idx[1]:min_idx[2]];

@@ -1,8 +1,21 @@
-### This function performs local minima detection  ###
-### following the algorithm described in the paper ###
-
 library(splus2R)
 
+#' Find local minima of a brathing track following the procedure described in 
+#' *A. LoMauro, A. Colli, L. Colombo, A. Aliverti,
+#' Breathing patterns recognition: A functional data analysis approach,
+#' Computer Methods and Programs in Biomedicine*
+#' 
+#' @param time a vector of time instants
+#' @param voltot the vector of volume values corresponding to the time vector
+#' @param peak_span the minimum distance in data points between two local maxima
+#' @param grid_coef length of the sections for piecewise smoothing between two maxima
+#' @param step length of the sections for computing piecewise mean derivative between two maxima
+#' @param plot defaults 0, if 1 plot all inspection graphs
+#' @param spiky_min logical, if True, just applies the local maxima algorithm to find local minima.
+#' 
+#' @return a list containing minima values, the indexes of local minima, indexes of local maxima,
+#' breaths durations (delta T) and the input params.
+#' 
 find_local_min=function(time, voltot, peak_span=201, grid_coef=10, step=10, plot=0, spiky_min=F){
   
   # find local maxima
