@@ -1,5 +1,3 @@
-library(roahd)
-
 #' This function performs functional outlier detection on a set of Optoelectronic Plethysmography
 #' curves containing total volume, pulmonary rib cage voltume, abdominal rib cage volume and abdominal volume
 #' as in the paper *A. LoMauro, A. Colli, L. Colombo, A. Aliverti,

@@ -1,6 +1,4 @@
-library(splus2R)
-
-#' Find local minima of a brathing track following the procedure described in 
+#' Find local minima of a breathing track following the procedure described in 
 #' *A. LoMauro, A. Colli, L. Colombo, A. Aliverti,
 #' Breathing patterns recognition: A functional data analysis approach,
 #' Computer Methods and Programs in Biomedicine*

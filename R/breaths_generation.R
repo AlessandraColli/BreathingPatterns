@@ -1,6 +1,6 @@
 #' A function to generate a sequence simulated breath curves.
 #' 
-#' @param nbraths number of breaths in the simulated track
+#' @param nbreaths number of breaths in the simulated track
 #' @param n_parts number of sections composing each breath
 #' @param sampling_freq desired sampling frequency of the output curves
 #' @param amplitudes mean amplitude of each breath part
