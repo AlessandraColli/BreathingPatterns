@@ -2,6 +2,15 @@
 
 R code for the analysis of respiratory signals obtained by means of Optoelectronic Plethysmography.
 
+Reference code for the research paper *A. LoMauro, A. Colli, L. Colombo, A. Aliverti,
+Breathing patterns recognition: A functional data analysis approach,
+Computer Methods and Programs in Biomedicine,
+Volume 217,
+2022,
+106670,
+ISSN 0169-2607,
+https://doi.org/10.1016/j.cmpb.2022.106670.*
+
 
 ### Prerequisites
 
@@ -16,6 +25,10 @@ The *fdakmapp* library can be found under AlessandraColli/fdakmapp. For a smooth
 Windows users), we suggest downloading the source code in a folder called fdakmapp-master and install through
 
 	install.packages('fdakmapp-master', type='source', repos=NULL)
+
+#### Note
+A more recent version of roahd and fdakmapp is available at https://github.com/astamm/roahd and https://github.com/astamm/fdacluster, respectively,
+though current BreathingPatterns implementation depends on the older packages.
 
 ### Folder structure
 
