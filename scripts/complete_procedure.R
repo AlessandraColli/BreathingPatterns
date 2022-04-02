@@ -5,12 +5,12 @@
 library(fda)
 library(fdakmapp)
 
-source("../src/smooth_breath_gcv.R")
-source("../src/localmin.R")
-source("../src/table_breaths.R")
-source("../src/rescale.R")
-source("../src/outlier_detection.R")
-source("../src/plots.R")
+source("../R/smooth_breath_gcv.R")
+source("../R/localmin.R")
+source("../R/table_breaths.R")
+source("../R/rescale.R")
+source("../R/outlier_detection.R")
+source("../R/plots.R")
 
 ### load data ###
 
