@@ -4,6 +4,8 @@
 
 library(fda)
 library(fdakmapp)
+library(roahd)
+library(splus2R)
 
 source("../R/smooth_breath_gcv.R")
 source("../R/localmin.R")
